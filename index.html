@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>JSONify | Formatter & Validator</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        body { background: #0b0f19; color: #f8fafc; font-family: 'Outfit', sans-serif; padding: 20px; }
+        h2 { text-align: center; color: #3b82f6; }
+        .container { display: flex; gap: 20px; height: 75vh; }
+        textarea { flex: 1; background: #111827; border: 1px solid #1f2937; border-radius: 8px; color: #34d399; padding: 15px; font-family: monospace; font-size: 1rem; resize: none; outline: none; }
+        .controls { display: flex; flex-direction: column; justify-content: center; gap: 15px; }
+        button { background: #3b82f6; border: none; padding: 12px 20px; color: white; border-radius: 6px; font-weight: bold; cursor: pointer; transition: 0.2s; }
+        button:hover { background: #2563eb; }
+        .error { color: #ef4444; font-weight: bold; text-align: center; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <h2>JSONify Formatter & Parser</h2>
+    <div class="container">
+        <textarea id="input" placeholder="Paste raw JSON here..."></textarea>
+        <div class="controls">
+            <button onclick="format()">Format</button>
+            <button onclick="minify()">Minify</button>
+        </div>
+        <textarea id="output" placeholder="Formated output will appear here..." readonly></textarea>
+    </div>
+    <div class="error" id="error"></div>
+    <script>
+        function format() {
+            const input = document.getElementById('input').value;
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = '';
+            try {
+                const parsed = JSON.parse(input);
+                document.getElementById('output').value = JSON.stringify(parsed, null, 4);
+            } catch (e) {
+                errorDiv.textContent = "Invalid JSON: " + e.message;
+            }
+        }
+        function minify() {
+            const input = document.getElementById('input').value;
+            const errorDiv = document.getElementById('error');
+            errorDiv.textContent = '';
+            try {
+                const parsed = JSON.parse(input);
+                document.getElementById('output').value = JSON.stringify(parsed);
+            } catch (e) {
+                errorDiv.textContent = "Invalid JSON: " + e.message;
+            }
+        }
+    </script>
+</body>
+</html>
